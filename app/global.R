@@ -1,0 +1,16 @@
+library(shiny)
+library(here)
+library(shinyjs)
+library(bslib)
+library(tidyverse)
+library(tokenizers)
+library(textstem)
+library(tidytext)
+library(shinyWidgets)
+library(shinipsum)
+library(DT)
+library(scales)
+library(patchwork)
+library(waiter)
+
+transcriptDefault <- "Young boy is practicing playing soccer. Kicking the ball up and keeping it in the air. He miskicks. It fall goes and breaks the window of his house. Of the living room actually. And bounces into the living room knocking a lamp over where his father is sitting. The father picks up the soccer ball. Looks out the window. And calls for the little boy to come and explain."

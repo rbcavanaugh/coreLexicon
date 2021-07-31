@@ -6,9 +6,9 @@ intro_tab_div <-
                       
                       tabPanelBody(value = "glide1",
                                    column(align = "center", width = 8, offset = 2,
-                                          h5("About and Instructions:"),
+                                          h5("Welcome to the Core Lexicon Analysis Shiny App"),
                                           div(style="display: inline-block; text-align: left;",
-                                              intro_text,
+                                              shiny::includeMarkdown(here("app", "www", "corelex_intro.md")),
                                               br(),
                                               # start!
                                               div(align="center",

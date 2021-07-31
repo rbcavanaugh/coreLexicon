@@ -12,18 +12,18 @@ footer_div <-
                  inputId='source',
                  label="Source Code",
                  icon = icon("github"),
-                 onclick ="window.open('https://github.com/rbcavanaugh/mssg', '_blank')",
+                 onclick ="window.open('https://github.com/rbcavanaugh/corelexicon', '_blank')",
                  style = "background:transparent; border:none;"
                  
                ),
                actionButton(
-                 inputId = "info",
-                 label = "Scoring Info",
+                 inputId = "faq",
+                 label = "FAQ",
                  icon = icon("info-circle"),
                  style = "background:transparent; border:none;"
                ),
                actionButton(
-                 inputId = "about",
+                 inputId = "bio",
                  label = "About Us",
                  icon = icon("user-friends"),
                  style = "background:transparent; border:none;"

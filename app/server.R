@@ -146,7 +146,7 @@ shinyServer(function(input, output, session) {
       ) %>%
       dplyr::filter(met == "Production") %>%
       ggplot(aes(x = val, color = Cohort, fill = Cohort)) +
-      geom_density(alpha = .3) +
+      geom_density(alpha = .3, adjust = 3) +
       geom_vline(data = data.frame(xint=selectedData()[[3]][[1]],met="Production"), 
                  aes(xintercept = xint), linetype = "dashed", size = 1) +
       theme_grey(base_size = 14) +
@@ -167,7 +167,7 @@ shinyServer(function(input, output, session) {
       ) %>%
       dplyr::filter(met == "Efficiency") %>%
       ggplot(aes(x = val, color = Cohort, fill = Cohort)) +
-      geom_density(alpha = .3) +
+      geom_density(alpha = .3, adjust = 3) +
       geom_vline(data = data.frame(xint=selectedData()[[3]][[2]],met="Efficiency"), 
                  aes(xintercept = xint), linetype = "dashed", size = 1) +
       theme_grey(base_size = 14) +
@@ -306,28 +306,28 @@ shinyServer(function(input, output, session) {
       input$stim == 'sandwich' ~ 25
     )
     
-    dist1 = truncnorm::rtruncnorm(10000,
+    dist1 = truncnorm::rtruncnorm(500,
                                   mean = norm_mean[[1]][[1]],
                                   sd = norm_mean[[1]][[2]],
                                   a = norm_mean[[1]][[3]],
                                   b = norm_mean[[1]][[4]])
-    percentile1 = label_percent()(ecdf(dist1)(22))
+    percentile1 = label_percent()(ecdf(dist1)(score_num))
     
-    dist2 = truncnorm::rtruncnorm(10000,
+    dist2 = truncnorm::rtruncnorm(500,
                                   mean = aphasia_mean[[1]][[1]],
                                   sd = aphasia_mean[[1]][[2]],
                                   a = aphasia_mean[[1]][[3]],
                                   b = aphasia_mean[[1]][[4]])
     percentile2 = label_percent()(ecdf(dist2)(score_num))
     
-    dist3 = truncnorm::rtruncnorm(10000,
+    dist3 = truncnorm::rtruncnorm(500,
                                   mean = norm_mean_eff[[1]][[1]],
                                   sd = norm_mean_eff[[1]][[2]],
                                   a = norm_mean_eff[[1]][[3]],
                                   b = norm_mean_eff[[1]][[4]])
     percentile3 = label_percent()(ecdf(dist3)(score_eff))
     
-    dist4 = truncnorm::rtruncnorm(10000,
+    dist4 = truncnorm::rtruncnorm(500,
                                   mean = aphasia_mean_eff[[1]][[1]],
                                   sd = aphasia_mean_eff[[1]][[2]],
                                   a = aphasia_mean_eff[[1]][[3]],
@@ -385,26 +385,23 @@ shinyServer(function(input, output, session) {
   # ------------------------------------------------------------------------------
   ################################################################################
   # More information modal
-  observeEvent(input$info, {
+  observeEvent(input$faq, {
     showModal(modalDialog(
-      tags$iframe(src="README.html", width = "100%",
-                  height = "650px", frameBorder = "0"),
+      shiny::includeMarkdown(here("app", "www", "faq.md")),
       easyClose = TRUE,
       footer = NULL,
       size = "l"
     ))
   })
   # readme modal. probabily will be deleted
-  observeEvent(input$dev, {
+  observeEvent(input$bio, {
     showModal(modalDialog(
-      tags$iframe(src="README.html", width = "100%",
-                  height = "650px", frameBorder = "0"),
+      shiny::includeMarkdown(here("app", "www", "bio.md")),
       size = "l",
       easyClose = TRUE,
       footer = NULL
     ))
   })
   
-
 
 })
