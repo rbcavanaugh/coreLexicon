@@ -139,49 +139,50 @@ shinyServer(function(input, output, session) {
   # core lexicon results plot 
   output$plot_cl <- renderPlot({
     x$show()
-    prod <- selectedData()[[2]] %>%
-      mutate(Cohort = ifelse(dist == 'dist1' | dist == 'dist3', 'control', 'aphasia'),
-             met = factor(ifelse(dist == 'dist1' | dist == 'dist2', 'Production', 'Efficiency'),
-                          levels = c('Production', 'Efficiency'))
-      ) %>%
-      dplyr::filter(met == "Production") %>%
-      ggplot(aes(x = val, color = Cohort, fill = Cohort)) +
-      geom_density(alpha = .3, adjust = 3) +
-      geom_vline(data = data.frame(xint=selectedData()[[3]][[1]],met="Production"), 
-                 aes(xintercept = xint), linetype = "dashed", size = 1) +
-      theme_grey(base_size = 14) +
-      theme(#panel.background = element_rect(fill = "transparent"),
-        legend.position = 'bottom',
-        axis.title.y=element_blank(),
-        axis.title.x=element_blank(),
-        axis.text.y=element_blank(),
-        axis.ticks.y=element_blank(),
-        legend.title = element_blank(),
-        plot.title = element_text(hjust = 0.5)) +
-      labs(title = "Core words")
-    
-    eff <- selectedData()[[2]] %>%
-      mutate(Cohort = ifelse(dist == 'dist1' | dist == 'dist3', 'control', 'aphasia'),
-             met = factor(ifelse(dist == 'dist1' | dist == 'dist2', 'Production', 'Efficiency'),
-                          levels = c('Production', 'Efficiency'))
-      ) %>%
-      dplyr::filter(met == "Efficiency") %>%
-      ggplot(aes(x = val, color = Cohort, fill = Cohort)) +
-      geom_density(alpha = .3, adjust = 3) +
-      geom_vline(data = data.frame(xint=selectedData()[[3]][[2]],met="Efficiency"), 
-                 aes(xintercept = xint), linetype = "dashed", size = 1) +
-      theme_grey(base_size = 14) +
-      theme(#panel.background = element_rect(fill = "transparent"),
-        legend.position = 'bottom',
-        axis.title.y=element_blank(),
-        axis.title.x=element_blank(),
-        axis.text.y=element_blank(),
-        axis.ticks.y=element_blank(),
-        legend.title = element_blank(),
-        plot.title = element_text(hjust = 0.5)) +
-      labs(title = "Core words / min")
-    
-    prod + eff + plot_layout(guides = 'collect') & theme(legend.position = 'bottom')
+    get_results_plot(dat = selectedData())
+    # prod <- selectedData()[[2]] %>%
+    #   mutate(Cohort = ifelse(dist == 'dist1' | dist == 'dist3', 'control', 'aphasia'),
+    #          met = factor(ifelse(dist == 'dist1' | dist == 'dist2', 'Production', 'Efficiency'),
+    #                       levels = c('Production', 'Efficiency'))
+    #   ) %>%
+    #   dplyr::filter(met == "Production") %>%
+    #   ggplot(aes(x = val, color = Cohort, fill = Cohort)) +
+    #   geom_density(alpha = .3, adjust = 3) +
+    #   geom_vline(data = data.frame(xint=selectedData()[[3]][[1]],met="Production"), 
+    #              aes(xintercept = xint), linetype = "dashed", size = 1) +
+    #   theme_grey(base_size = 14) +
+    #   theme(#panel.background = element_rect(fill = "transparent"),
+    #     legend.position = 'bottom',
+    #     axis.title.y=element_blank(),
+    #     axis.title.x=element_blank(),
+    #     axis.text.y=element_blank(),
+    #     axis.ticks.y=element_blank(),
+    #     legend.title = element_blank(),
+    #     plot.title = element_text(hjust = 0.5)) +
+    #   labs(title = "Core words")
+    # 
+    # eff <- selectedData()[[2]] %>%
+    #   mutate(Cohort = ifelse(dist == 'dist1' | dist == 'dist3', 'control', 'aphasia'),
+    #          met = factor(ifelse(dist == 'dist1' | dist == 'dist2', 'Production', 'Efficiency'),
+    #                       levels = c('Production', 'Efficiency'))
+    #   ) %>%
+    #   dplyr::filter(met == "Efficiency") %>%
+    #   ggplot(aes(x = val, color = Cohort, fill = Cohort)) +
+    #   geom_density(alpha = .3, adjust = 3) +
+    #   geom_vline(data = data.frame(xint=selectedData()[[3]][[2]],met="Efficiency"), 
+    #              aes(xintercept = xint), linetype = "dashed", size = 1) +
+    #   theme_grey(base_size = 14) +
+    #   theme(#panel.background = element_rect(fill = "transparent"),
+    #     legend.position = 'bottom',
+    #     axis.title.y=element_blank(),
+    #     axis.title.x=element_blank(),
+    #     axis.text.y=element_blank(),
+    #     axis.ticks.y=element_blank(),
+    #     legend.title = element_blank(),
+    #     plot.title = element_text(hjust = 0.5)) +
+    #   labs(title = "Core words / min")
+    # 
+    # prod + eff + plot_layout(guides = 'collect') & theme(legend.position = 'bottom')
     
   })
   
@@ -228,9 +229,7 @@ shinyServer(function(input, output, session) {
       input$stim == 'refused_umbrella' ~ 2,
       input$stim == 'cat_rescue' ~ 3,
       input$stim == 'cinderella' ~ 4,
-      input$stim == 'sandwich' ~ 5,
-      input$stim == 'gdc' ~ 6,
-      input$stim == 'picnic' ~ 7
+      input$stim == 'sandwich' ~ 5
     )
     df <- core_lex(input$transcr, task, input$age)
     options = list(show = 10)
@@ -250,9 +249,7 @@ shinyServer(function(input, output, session) {
       input$stim == 'refused_umbrella' ~ 2,
       input$stim == 'cat_rescue' ~ 3,
       input$stim == 'cinderella' ~ 4,
-      input$stim == 'sandwich' ~ 5,
-      input$stim == 'gdc' ~ 6,
-      input$stim == 'picnic' ~ 7
+      input$stim == 'sandwich' ~ 5
     )
     
     #df <- core_lex(input$transcr, task, input$age)
@@ -263,22 +260,8 @@ shinyServer(function(input, output, session) {
     # Norn data ####
     
     # ACCURACY #
-    norm_mean = case_when(
-      input$stim == 'broken_window' ~ list(c(19, 2.9, 12, 23)),
-      input$stim == 'refused_umbrella' ~ list(c(26.5, 3.1, 17, 33)),
-      input$stim == 'cat_rescue' ~ list(c(26.3, 3.3, 16, 33)),
-      input$stim == 'cinderella' ~ list(c(69.8, 15.5, 6, 90)),
-      input$stim == 'sandwich' ~ list(c(19, 2.7, 14, 23))
-    )
-    
-    aphasia_mean = case_when(
-      input$stim == 'broken_window' ~ list(c(12, 4.9, 0, 22)),
-      input$stim == 'refused_umbrella' ~ list(c(17.3, 7.7, 0, 34)),
-      input$stim == 'cat_rescue' ~ list(c(16.8, 7.0, 0, 31)),
-      input$stim == 'cinderella' ~ list(c(37.5, 19.4, 1, 82)),
-      input$stim == 'sandwich' ~ list(c(11.3, 5.4, 0, 23))
-    )
-    
+    norm_mean = ecdf_fun(as.numeric(control_norms[[input$stim]]$Score), score_num)
+    aphasia_mean = ecdf_fun(as.numeric(pwa_norms[[input$stim]]$Score), score_num)
     # EFFICIENCY 
     
     norm_mean_eff = case_when(
@@ -306,20 +289,6 @@ shinyServer(function(input, output, session) {
       input$stim == 'sandwich' ~ 25
     )
     
-    dist1 = truncnorm::rtruncnorm(500,
-                                  mean = norm_mean[[1]][[1]],
-                                  sd = norm_mean[[1]][[2]],
-                                  a = norm_mean[[1]][[3]],
-                                  b = norm_mean[[1]][[4]])
-    percentile1 = label_percent()(ecdf(dist1)(score_num))
-    
-    dist2 = truncnorm::rtruncnorm(500,
-                                  mean = aphasia_mean[[1]][[1]],
-                                  sd = aphasia_mean[[1]][[2]],
-                                  a = aphasia_mean[[1]][[3]],
-                                  b = aphasia_mean[[1]][[4]])
-    percentile2 = label_percent()(ecdf(dist2)(score_num))
-    
     dist3 = truncnorm::rtruncnorm(500,
                                   mean = norm_mean_eff[[1]][[1]],
                                   sd = norm_mean_eff[[1]][[2]],
@@ -342,8 +311,8 @@ shinyServer(function(input, output, session) {
       Metric = c('Production', 'Efficiency'),
       Score = c(paste0(round(score_num,0),' core words'),
                 paste0(round(score_eff, 1), ' core words/min')),
-      ControlPercentile =  c(percentile1, percentile3),
-      AphasiaPercentile = c(percentile2, percentile4)
+      ControlPercentile =  c(norm_mean, percentile3),
+      AphasiaPercentile = c(aphasia_mean, percentile4)
     )
     
     score <- score %>%
@@ -364,8 +333,8 @@ shinyServer(function(input, output, session) {
     colnames(score) <- c('Metric', 'Score', 'Control Percentile', 'Aphasia Percentile')
     
     dists <- tibble(
-      dist1 = dist1,
-      dist2 = dist2, 
+      dist1 = c(as.numeric(control_norms[[input$stim]]$Score),rep(NA, 500-length(as.numeric(control_norms[[input$stim]]$Score)))),
+      dist2 = c(as.numeric(pwa_norms[[input$stim]]$Score), rep(NA, 500-length(as.numeric(pwa_norms[[input$stim]]$Score)))),
       dist3 = dist3,
       dist4 = dist4
     ) %>%
