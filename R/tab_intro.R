@@ -8,7 +8,7 @@ intro_tab_div <-
                                   column(align = "center", width = 8, offset = 2,
                                          h5("Welcome to the Core Lexicon Analysis Shiny App"),
                                          div(style="display: inline-block; text-align: left;",
-                                             shiny::includeMarkdown(here("app", "www", "corelex_intro.md")),
+                                             shiny::includeMarkdown(here( "www", "corelex_intro.md")),
                                              br(),
                                              # start!
                                              div(align="center",
@@ -56,7 +56,7 @@ intro_tab_div <-
                                   fluidRow(
                                     column(width = 5, offset = 1,
                                            h4("Transcrition"),br(),
-                                              includeMarkdown(here("app", "www", "transcribing.md")),
+                                              includeMarkdown(here( "www", "transcribing.md")),
                                            "We recommended copying and saving samples into a text editor
                                    (e.g. microsoft word) after transcribing and before scoring.", br(), br(),
                                    checkboxInput(inputId = "adj",

@@ -216,7 +216,7 @@ shinyServer(function(input, output, session) {
   # More information modal
   observeEvent(input$faq, {
     showModal(modalDialog(
-      shiny::includeMarkdown(here("app", "www", "faq.md")),
+      shiny::includeMarkdown(here( "www", "faq.md")),
       easyClose = TRUE,
       footer = NULL,
       size = "l"
@@ -225,7 +225,7 @@ shinyServer(function(input, output, session) {
   # readme modal. probabily will be deleted
   observeEvent(input$bio, {
     showModal(modalDialog(
-      shiny::includeMarkdown(here("app", "www", "bio.md")),
+      shiny::includeMarkdown(here( "www", "bio.md")),
       size = "l",
       easyClose = TRUE,
       footer = NULL
