@@ -30,7 +30,7 @@ Imports:
     scales,
     patchwork,
     waiter,
-    scales,
+    truncnorm,
     magrittr,
     pkgload,
     markdown
