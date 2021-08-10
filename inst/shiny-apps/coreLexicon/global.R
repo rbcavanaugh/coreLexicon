@@ -8,7 +8,7 @@ broken_window=tibble::tibble(target = c("a","and","ball","be","boy","break","go"
                        "it","kick","lamp","look","of","out","over","play","sit",
                        "soccer","the","through","to","up","window"))
 
-refused_umbrella=dtibble::tibble(target =c("a", 'and', 'back', 'be', 'boy', 'do', 'get', 'go', 'have','he',
+refused_umbrella=tibble::tibble(target =c("a", 'and', 'back', 'be', 'boy', 'do', 'get', 'go', 'have','he',
                           'home', 'i', 'in', 'it', 'little', 'mother', 'mom', 'need', 'not', 'out',
                           'rain', 'say', 'school', 'she', 'so', 'start', 'take', 'that', 'the',
                           'then', 'to', 'umbrella', 'walk', 'wet', 'with', 'you'))
