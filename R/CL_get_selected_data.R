@@ -1,7 +1,7 @@
-
+#' @export
 get_selected_data <- function(stim, score_num_data, time, adj){
     
-    task = case_when(
+    task = dplyr::case_when(
       stim == 'broken_window' ~ 1,
       stim == 'refused_umbrella' ~ 2,
       stim == 'cat_rescue' ~ 3,
@@ -21,7 +21,7 @@ get_selected_data <- function(stim, score_num_data, time, adj){
     aphasia_mean = ecdf_fun(as.numeric(pwa_norms[[stim]]$Score), score_num)
     # EFFICIENCY 
     
-    norm_mean_eff = case_when(
+    norm_mean_eff = dplyr::case_when(
       stim == 'broken_window' ~ list(c(34.8, 13.5, 6.7, 72.9)),
       stim == 'refused_umbrella' ~ list(c(41.3, 14.5, 16.6, 98.2)),
       stim == 'cat_rescue' ~ list(c(39.8, 14.3, 13.3, 100)),
@@ -29,7 +29,7 @@ get_selected_data <- function(stim, score_num_data, time, adj){
       stim == 'sandwich' ~ list(c(40.5, 16.6, 8.6, 114.0))
     )
     
-    aphasia_mean_eff = case_when(
+    aphasia_mean_eff = dplyr::case_when(
       stim == 'broken_window' ~ list(c(18.5, 13.3, 0, 84.0)),
       stim == 'refused_umbrella' ~ list(c(19.7, 13.4, 0, 67.5)),
       stim == 'cat_rescue' ~ list(c(16.9, 12.3, 0, 93.8)),
@@ -38,7 +38,7 @@ get_selected_data <- function(stim, score_num_data, time, adj){
     )
     
     # Max 
-    max_val = case_when(
+    max_val = dplyr::case_when(
       stim == 'broken_window' ~ 24,
       stim == 'refused_umbrella' ~ 35,
       stim == 'cat_rescue' ~ 34,
@@ -51,20 +51,20 @@ get_selected_data <- function(stim, score_num_data, time, adj){
                                   sd = norm_mean_eff[[1]][[2]],
                                   a = norm_mean_eff[[1]][[3]],
                                   b = norm_mean_eff[[1]][[4]])
-    percentile3 = label_percent()(ecdf(dist3)(score_eff))
+    percentile3 = scales::label_percent()(stats::ecdf(dist3)(score_eff))
     
     dist4 = truncnorm::rtruncnorm(500,
                                   mean = aphasia_mean_eff[[1]][[1]],
                                   sd = aphasia_mean_eff[[1]][[2]],
                                   a = aphasia_mean_eff[[1]][[3]],
                                   b = aphasia_mean_eff[[1]][[4]])
-    percentile4 = label_percent()(ecdf(dist4)(score_eff))
+    percentile4 = scales::label_percent()(stats::ecdf(dist4)(score_eff))
     
     
     #####
     
     
-    score = tibble(
+    score = data.frame(
       Metric = c('Production', 'Efficiency'),
       Score = c(paste0(round(score_num,0),' core words'),
                 paste0(round(score_eff, 1), ' core words/min')),
@@ -89,7 +89,7 @@ get_selected_data <- function(stim, score_num_data, time, adj){
     
     colnames(score) <- c('Metric', 'Score', 'Control Percentile', 'Aphasia Percentile')
     
-    dists <- tibble(
+    dists <- data.frame(
       dist1 = c(as.numeric(control_norms[[stim]]$Score),rep(NA, 500-length(as.numeric(control_norms[[stim]]$Score)))),
       dist2 = c(as.numeric(pwa_norms[[stim]]$Score), rep(NA, 500-length(as.numeric(pwa_norms[[stim]]$Score)))),
       dist3 = dist3,

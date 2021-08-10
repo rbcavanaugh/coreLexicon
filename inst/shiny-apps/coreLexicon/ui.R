@@ -1,31 +1,31 @@
 # Define UI
 shinyUI(
   tagList(
-    use_waiter(),
-    waiter_preloader(html = spin_dots(), color = "white"),
-    useShinyjs(),
+    waiter::use_waiter(),
+    waiter::waiter_preloader(html = waiter::spin_dots(), color = "white"),
+    shinyjs::useShinyjs(),
     includeCSS("www/style.css"),
     navbarPage(title = "Core Lexicon Analysis",
                id = "mainpage",
                footer = tags$div(
                    id = "footer_id",
                    class = "footer",
-                   footer_div
+                   footer_div()
                ),
                
-               theme = minimal_theme,
+               theme = minimal_theme(),
                
                ############################ Instructions ############################## 
                tabPanel(value = "intro", title = "Intro", 
-                            intro_tab_div
+                        get_intro_div()
                ),
                ############################ Scoring ###################################
                tabPanel(value = "scoring", title = "Scoring",
-                            scoring_div
+                        get_scoring_div()
                ),
                ############################ Results ###################################
                tabPanel(value = "results", title = "Results",
-                            results_div
+                        get_results_div()
                ), br(), br(), br(), br()
                ########################################################################
               

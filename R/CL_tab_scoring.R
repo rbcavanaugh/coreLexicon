@@ -1,5 +1,5 @@
-
-  scoring_div <-
+#' @export
+  get_scoring_div <- function(){
     column(width = 10, offset = 1, id = "scoring_div_for_waiter",
         fluidRow(
           column(width = 5, 
@@ -13,7 +13,7 @@
         ),
         column(width= 7, 
                h4("Scoring Table"),
-               DTOutput("table_cl")
+               DT::DTOutput("table_cl")
                )
         ), br(), br(), br(),
         fluidRow(
@@ -24,3 +24,4 @@
         )
     )
   
+}

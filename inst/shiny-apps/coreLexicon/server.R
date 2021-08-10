@@ -8,13 +8,13 @@ shinyServer(function(input, output, session) {
   ################# WAITERS #####################
   
   #establishes plot loading 
-  w <- Waiter$new(id = "table_cl",
-                  html = spin_loader(), 
+  w <- waiter::Waiter$new(id = "table_cl",
+                  html = waiter::spin_loader(), 
                   color = "white")
   
   #establishes plot loading 
-  x <- Waiter$new(id = "plot_cl",
-                  html = spin_loader(), 
+  x <- waiter::Waiter$new(id = "plot_cl",
+                  html = waiter::spin_loader(), 
                   color = "white")
 
   ###########################Intro tab next and back############################
@@ -105,7 +105,7 @@ shinyServer(function(input, output, session) {
                  columnDefs = list(list(className = 'dt-center', targets = 0:3)),
                  paging = FALSE
   ),
-  callback = JS(
+  callback = DT::JS(
     "table.rows().every(function(i, tab, row) {
         var $this = $(this.node());
         $this.attr('id', this.data()[0]);
@@ -166,11 +166,6 @@ shinyServer(function(input, output, session) {
                                                                        value = df$produced[i]
       ))
       
-      # as.character(shinyWidgets::awesomeCheckbox(paste0(get_cor_id(), i),
-      #                                            label="",
-      #                                            value = df$produced[i],
-      #                                            status = "primary"
-      # ))
     }
     df %>% dplyr::select(-produced)
   })
@@ -216,7 +211,7 @@ shinyServer(function(input, output, session) {
   # More information modal
   observeEvent(input$faq, {
     showModal(modalDialog(
-      shiny::includeMarkdown(here( "www", "faq.md")),
+      shiny::includeMarkdown("www/faq.md"),
       easyClose = TRUE,
       footer = NULL,
       size = "l"
@@ -225,7 +220,7 @@ shinyServer(function(input, output, session) {
   # readme modal. probabily will be deleted
   observeEvent(input$bio, {
     showModal(modalDialog(
-      shiny::includeMarkdown(here( "www", "bio.md")),
+      shiny::includeMarkdown("www/bio.md"),
       size = "l",
       easyClose = TRUE,
       footer = NULL

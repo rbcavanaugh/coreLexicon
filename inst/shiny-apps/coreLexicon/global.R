@@ -1,4 +1,7 @@
 
+
+transcriptDefault <- "Young boy is practicing playing soccer. Kicking the ball up and keeping it in the air. He miskicks. It fall goes and breaks the window of his house. Of the living room actually. And bounces into the living room knocking a lamp over where his father is sitting. The father picks up the soccer ball. Looks out the window. And calls for the little boy to come and explain."
+
 # need to give a way for clinicians to take away or add points manually to adjust the score...
 
 broken_window=tibble(c("a","and","ball","be","boy","break","go","he","in",
@@ -34,30 +37,3 @@ sandwich = tibble(c("a","and","bread","butter","get","it","jelly","knife","of", 
 
 
 corpus <- list(broken_window, refused_umbrella, cat_rescue, cinderella, sandwich)
-
-
-core_lex <- function(text, stimulus, age_input){
-  stim = corpus[[stimulus]]
-
-  colnames(stim) = 'target_lemma'
-  text = tibble(text)
-  colnames(text) = 'text'
-  text <- tibble(unnest_tokens(text, word, text)) %>% distinct()
-  text$lemma <- lemmatize_words(text$word)
-  colnames(text) = c('token', 'produced_lemma')
-  
-  return_list <- list()
-  
-  return_list$match <- stim %>%
-    left_join(text, by = c('target_lemma' = 'produced_lemma')) %>%
-    mutate(produced = ifelse(!is.na(token), 1,0)) %>%
-    select(target_lemma, produced, token)
-  
-  return_list$extra <- text %>%
-    anti_join(stim, by = c('produced_lemma' = 'target_lemma'))
-  
-  
-  return(return_list)
-}
-
-

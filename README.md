@@ -47,3 +47,5 @@ error. A percentile score is then calculated using norms reported by
 currently in Beta, and is not yet ready for research or clinical
 deployment. Please note, the app does not save any data from each user
 session.
+
+## References

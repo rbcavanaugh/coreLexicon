@@ -21,3 +21,5 @@ CoreLex has shown good sensitivity in differentiating between controls and indiv
 
 Briefly, the app works by converting an orthographic transcription into tokens, finding the lemma associated with each token, and matching these lemmas with established core lexicon checklists. The user is asked to double check that no core lexicon targets were missed, or identified in error. A percentile score is then calculated using norms reported by [REFERENCE]. The app is written in the {shiny} framework. The app is currently in Beta, and is not yet ready for research or clinical deployment. Please note, the app does not save any data from each user session. 
 
+## References
+
