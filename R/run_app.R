@@ -12,6 +12,7 @@ runCoreLex <- function() {
   if (appDir == "") {
     stop("Could not find example directory. Try re-installing `mypackage`.", call. = FALSE)
   }
+  options(shiny.autoload.r=FALSE)
   
   shiny::runApp(appDir, display.mode = "normal")
 }
