@@ -1,4 +1,4 @@
-Package: corelexicon
+Package: coreLexicon
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
 Authors@R: 
@@ -34,6 +34,6 @@ Imports:
     magrittr,
     pkgload,
     markdown
-URL: https://www.github.com/aphasia-apps/corelexicon
-BugReports: https://www.github.com/aphasia-apps/corelexicon/issues
+URL: https://www.github.com/aphasia-apps/coreLexicon
+BugReports: https://www.github.com/aphasia-apps/coreLexicon/issues
 Language: en-US

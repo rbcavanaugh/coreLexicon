@@ -8,7 +8,7 @@
 #' runCoreLex()
 #' }
 runCoreLex <- function() {
-  appDir <- system.file("shiny-apps", "coreLexicon", package = "corelexicon")
+  appDir <- system.file("shiny-apps", "coreLexicon", package = "coreLexicon")
   if (appDir == "") {
     stop("Could not find example directory. Try re-installing `mypackage`.", call. = FALSE)
   }
