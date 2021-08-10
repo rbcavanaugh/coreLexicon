@@ -180,7 +180,7 @@ shinyServer(function(input, output, session) {
   # this makes the table for scoring....
   # reactive data
   selectedData2 <- reactive({
-    task = case_when(
+    task = dplyr::case_when(
       input$stim == 'broken_window' ~ 1,
       input$stim == 'refused_umbrella' ~ 2,
       input$stim == 'cat_rescue' ~ 3,
@@ -190,7 +190,7 @@ shinyServer(function(input, output, session) {
     df <- core_lex(input$transcr, task, input$age)
     options = list(show = 10)
     table = df$match %>%
-      rename('Target Lexeme' = target_lemma,
+      dplyr::rename('Target Lexeme' = target_lemma,
              'Token Produced' = token
       )
     return(table)

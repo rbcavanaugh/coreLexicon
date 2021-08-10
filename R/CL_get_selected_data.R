@@ -73,7 +73,7 @@ get_selected_data <- function(stim, score_num_data, time, adj){
     )
     
     score <- score %>%
-      mutate(
+      dplyr::mutate(
         ControlPercentile = ifelse(Metric != 'Production', ControlPercentile,
                                    ifelse(score_num > max_val,
                                           'exceeded max score',
@@ -95,7 +95,7 @@ get_selected_data <- function(stim, score_num_data, time, adj){
       dist3 = dist3,
       dist4 = dist4
     ) %>%
-      pivot_longer(cols = 1:4, names_to = 'dist', values_to = 'val')
+      tidyr::pivot_longer(cols = 1:4, names_to = 'dist', values_to = 'val')
     
     core_lex_data <- list()
     core_lex_data[["score"]] = score

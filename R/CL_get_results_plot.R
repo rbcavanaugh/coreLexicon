@@ -44,5 +44,6 @@ get_results_plot <- function(dat){
       plot.title = ggplot2::element_text(hjust = 0.5)) +
     ggplot2::labs(title = "Core words / min")
   
-  prod + eff + patchwork::plot_layout(guides = 'collect') & ggplot2::theme(legend.position = 'bottom')
+  plot = prod + eff + patchwork::plot_layout(guides = 'collect') & ggplot2::theme(legend.position = 'bottom')
+  return(plot)
 }
