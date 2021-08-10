@@ -1,4 +1,12 @@
+
+#' Run Core Lexicon App
+#' @description Function to locally run the core lexicon app
 #' @export
+#'
+#' @examples
+#' \dontrun{
+#' runCoreLex()
+#' }
 runCoreLex <- function() {
   appDir <- system.file("shiny-apps", "coreLexicon", package = "corelexicon")
   if (appDir == "") {
