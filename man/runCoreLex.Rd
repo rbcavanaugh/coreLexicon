@@ -4,7 +4,7 @@
 \alias{runCoreLex}
 \title{Run Core Lexicon App}
 \usage{
-runCoreLex()
+runCoreLex(...)
 }
 \description{
 Function to locally run the core lexicon app
