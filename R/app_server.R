@@ -1,7 +1,7 @@
 
 
 # Define server logic required to draw a histogram
-shinyServer(function(input, output, session) {
+app_server <- function(input, output, session) {
   
   
   values <- reactiveValues()
@@ -228,4 +228,4 @@ shinyServer(function(input, output, session) {
   })
   
 
-})
+}

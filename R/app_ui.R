@@ -1,5 +1,6 @@
 # Define UI
-shinyUI(
+app_ui <- function(request){
+  shinyUI(
   tagList(
     waiter::use_waiter(),
     waiter::waiter_preloader(html = waiter::spin_dots(), color = "white"),
@@ -13,17 +14,7 @@ shinyUI(
                    footer_div()
                ),
                
-               theme = bslib::bs_theme(
-                 bootswatch = "default",
-                 #base_font = bslib::font_google("Open Sans"),
-                 #heading_font = bslib::font_google("Open Sans"),
-                 version = "4",
-                 `enable-rounded` = T,
-                 `enable-transitions` = F,
-                 primary = "#1665AC",
-                 "navbar-bg" = "#e9ecef"
-               ),
-                 #minimal_theme(),
+               theme = minimal_theme(),
                
                ############################ Instructions ############################## 
                tabPanel(value = "intro", title = "Intro", 
@@ -42,3 +33,4 @@ shinyUI(
     )
   )
 )
+}
