@@ -88,7 +88,7 @@ shinyServer(function(input, output, session) {
   
   ################################## OUTPUTS ####################################
  # scoring table
-   output$table_cl = DT::renderDataTable({
+   output$table_cl = DT::renderDT({
     w$show()
     data()
     
@@ -105,7 +105,7 @@ shinyServer(function(input, output, session) {
                  columnDefs = list(list(className = 'dt-center', targets = 0:3)),
                  paging = FALSE
   ),
-  callback = DT::JS(
+  callback = htmlwidgets::JS(
     "table.rows().every(function(i, tab, row) {
         var $this = $(this.node());
         $this.attr('id', this.data()[0]);
@@ -187,7 +187,7 @@ shinyServer(function(input, output, session) {
       input$stim == 'cinderella' ~ 4,
       input$stim == 'sandwich' ~ 5
     )
-    df <- core_lex(input$transcr, task, input$age)
+    df <- core_lex(input$transcr, task)
     options = list(show = 10)
     table = df$match %>%
       dplyr::rename('Target Lexeme' = target_lemma,

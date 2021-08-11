@@ -1,4 +1,6 @@
-#' Footer div
+
+#' footer div
+#'
 #' @export
 footer_div <- function(){
   tagList(

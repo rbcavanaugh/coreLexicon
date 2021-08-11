@@ -1,4 +1,6 @@
-##### results tab
+
+#' Get results div
+#'
 #' @export
 get_results_div <- function(){
   column(width = 8, offset = 2,

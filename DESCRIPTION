@@ -16,8 +16,8 @@ RoxygenNote: 7.1.1
 Depends:
     R (>= 2.10),
     shiny
-Imports: 
-    here,
+Imports:
+    htmlwidgets,
     shinyjs,
     bslib,
     dplyr,

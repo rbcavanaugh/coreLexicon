@@ -1,6 +1,16 @@
+
+#' get selected data
+#'
+#' @param stim stim
+#' @param score_num_data score
+#' @param time time input
+#' @param adj adjustment
+#'
 #' @export
 get_selected_data <- function(stim, score_num_data, time, adj){
-    
+  control_norms <- norms$control_norms
+  pwa_norms <- norms$pwa_norms
+  
     task = dplyr::case_when(
       stim == 'broken_window' ~ 1,
       stim == 'refused_umbrella' ~ 2,
@@ -95,11 +105,11 @@ get_selected_data <- function(stim, score_num_data, time, adj){
       dist3 = dist3,
       dist4 = dist4
     ) %>%
-      tidyr::pivot_longer(cols = 1:4, names_to = 'dist', values_to = 'val')
+      tidyr::pivot_longer(cols = 1:4, names_to = 'dists', values_to = 'val')
     
     core_lex_data <- list()
     core_lex_data[["score"]] = score
-    core_lex_data[["dist"]] = dists
+    core_lex_data[["dists"]] = dists
     core_lex_data[["scores"]] = c(score_num, score_eff)
     
     return(core_lex_data) # make this a list with the data for the histograms too. 

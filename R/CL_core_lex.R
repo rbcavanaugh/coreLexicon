@@ -1,13 +1,19 @@
 
-#' Get corelex lemmas 
+
+#' core lex function
+#'
+#' @param text text input
+#' @param stimulus stimulus
+#'
 #' @export
-core_lex <- function(text, stimulus, age_input){
+core_lex <- function(text, stimulus){
   stim = corpus[[stimulus]]
 
   colnames(stim) = 'target_lemma'
-  text = data.frame(text)
+  text = tibble::tibble(text)
   colnames(text) = 'text'
-  text <- data.frame(tidytext::unnest_tokens(text, word, text)) %>% dplyr::distinct()
+  text <- tibble::tibble(tidytext::unnest_tokens(text, word, text)) %>%
+    dplyr::distinct()
   text$lemma <- textstem::lemmatize_words(text$word)
   colnames(text) = c('token', 'produced_lemma')
   

@@ -2,10 +2,15 @@
 % Please edit documentation in R/CL_core_lex.R
 \name{core_lex}
 \alias{core_lex}
-\title{Get corelex lemmas}
+\title{core lex function}
 \usage{
-core_lex(text, stimulus, age_input)
+core_lex(text, stimulus)
+}
+\arguments{
+\item{text}{text input}
+
+\item{stimulus}{stimulus}
 }
 \description{
-Get corelex lemmas
+core lex function
 }

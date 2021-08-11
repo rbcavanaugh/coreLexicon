@@ -2,10 +2,10 @@
 % Please edit documentation in R/CL_footer.R
 \name{footer_div}
 \alias{footer_div}
-\title{Footer div}
+\title{footer div}
 \usage{
 footer_div()
 }
 \description{
-Footer div
+footer div
 }

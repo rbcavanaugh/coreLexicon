@@ -1,4 +1,8 @@
+
+#' get scoring div
+#'
 #' @export
+#'
   get_scoring_div <- function(){
     column(width = 10, offset = 1, id = "scoring_div_for_waiter",
         fluidRow(
