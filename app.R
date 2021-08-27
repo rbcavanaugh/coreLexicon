@@ -1,8 +1,0 @@
-# Launch the ShinyApp (Do not remove this comment)
-# To deploy, run: rsconnect::deployApp()
-# Or use the blue button on top of this file
-# This file is only for deploying to shinyapps.io
-# It is not built in the package
-
-pkgload::load_all(export_all = F,helpers = FALSE,attach_testthat = FALSE)
-runCoreLex() 

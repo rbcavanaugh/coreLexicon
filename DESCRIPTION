@@ -1,39 +1,13 @@
-Package: coreLexicon
-Title: What the Package Does (One Line, Title Case)
+Package: cl
+Title: PKG_TITLE
 Version: 0.0.0.9000
-Authors@R: 
-    person(given = "First",
-           family = "Last",
-           role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+Authors@R: person('AUTHOR_FIRST', 'AUTHOR_LAST', email = 'AUTHOR@MAIL.COM', role = c('cre', 'aut'))
+Description: PKG_DESC.
 License: GPL (>= 3)
+Imports: 
+    config (>= 0.3.1),
+    golem (>= 0.3.1),
+    shiny (>= 1.6.0)
 Encoding: UTF-8
 LazyData: true
-Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
-Depends:
-    R (>= 2.10),
-    shiny
-Imports:
-    htmlwidgets,
-    shinyjs,
-    bslib,
-    dplyr,
-    tidyr,
-    tibble,
-    ggplot2,
-    textstem,
-    tidytext,
-    DT,
-    scales,
-    patchwork,
-    waiter,
-    truncnorm,
-    magrittr,
-    pkgload,
-    markdown
-URL: https://www.github.com/aphasia-apps/coreLexicon
-BugReports: https://www.github.com/aphasia-apps/coreLexicon/issues
-Language: en-US

@@ -10,7 +10,7 @@ get_intro_div <- function(){
                                   column(align = "center", width = 8, offset = 2,
                                          h5("Welcome to the Core Lexicon Analysis Shiny App"),
                                          div(style="display: inline-block; text-align: left;",
-                                             shiny::includeMarkdown("www/corelex_intro.md"),
+                                             includeMarkdown(system.file("app/www/corelex_intro.md", package = "cl")),
                                              br(),
                                              # start!
                                              div(align="center",
@@ -58,7 +58,7 @@ get_intro_div <- function(){
                                   fluidRow(
                                     column(width = 5, offset = 1,
                                            h4("Transcrition"),br(),
-                                              includeMarkdown("www/transcribing.md"),
+                                              includeMarkdown(system.file("app/www/transcribing.md", package = "cl")),
                                            "We recommended copying and saving samples into a text editor
                                    (e.g. microsoft word) after transcribing and before scoring.", br(), br(),
                                    checkboxInput(inputId = "adj",
