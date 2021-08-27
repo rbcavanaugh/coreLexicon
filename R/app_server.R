@@ -215,7 +215,7 @@ app_server <- function( input, output, session ) {
   # More information modal
   observeEvent(input$faq, {
     showModal(modalDialog(
-      shiny::includeMarkdown(system.file("app/www/faq.md", package = "cl")),
+      shiny::includeMarkdown(system.file("app/www/faq.md", package = "coreLexicon")),
       easyClose = TRUE,
       footer = NULL,
       size = "l"
@@ -224,7 +224,7 @@ app_server <- function( input, output, session ) {
   # readme modal. probabily will be deleted
   observeEvent(input$bio, {
     showModal(modalDialog(
-      shiny::includeMarkdown(system.file("app/www/bio.md", package = "cl")),
+      shiny::includeMarkdown(system.file("app/www/bio.md", package = "coreLexicon")),
       size = "l",
       easyClose = TRUE,
       footer = NULL
