@@ -1,7 +1,11 @@
-
-
-# Define server logic required to draw a histogram
-app_server <- function(input, output, session) {
+#' The application server-side
+#' 
+#' @param input,output,session Internal parameters for {shiny}. 
+#'     DO NOT REMOVE.
+#' @import shiny
+#' @noRd
+app_server <- function( input, output, session ) {
+  # Your application server logic 
   
   
   values <- reactiveValues()
@@ -9,14 +13,14 @@ app_server <- function(input, output, session) {
   
   #establishes plot loading 
   w <- waiter::Waiter$new(id = "table_cl",
-                  html = waiter::spin_loader(), 
-                  color = "white")
+                          html = waiter::spin_loader(), 
+                          color = "white")
   
   #establishes plot loading 
   x <- waiter::Waiter$new(id = "plot_cl",
-                  html = waiter::spin_loader(), 
-                  color = "white")
-
+                          html = waiter::spin_loader(), 
+                          color = "white")
+  
   ###########################Intro tab next and back############################
   observeEvent(input$glide_next1,{
     updateTabsetPanel(session, "glide", "glide2")
@@ -84,11 +88,11 @@ app_server <- function(input, output, session) {
     
   })
   
-
+  
   
   ################################## OUTPUTS ####################################
- # scoring table
-   output$table_cl = DT::renderDT({
+  # scoring table
+  output$table_cl = DT::renderDT({
     w$show()
     data()
     
@@ -145,8 +149,8 @@ app_server <- function(input, output, session) {
       )
       
     })
-
-
+  
+  
   ################################## REACTIVE VALUES ############################
   
   # core lex counter
@@ -162,14 +166,14 @@ app_server <- function(input, output, session) {
     df = selectedData2()
     for (i in 1:nrow(df)) {
       df[["Correct"]][i] <- as.character(checkboxInput(paste0(get_cor_id(), i),
-                                                                       label="",
-                                                                       value = df$produced[i]
+                                                       label="",
+                                                       value = df$produced[i]
       ))
       
     }
     df %>% dplyr::select(-produced)
   })
-
+  
   
   observe({
     accuracy = unlist(sapply(1:nrow(data()), function(i) input[[paste0(get_cor_id(), i)]]))
@@ -191,7 +195,7 @@ app_server <- function(input, output, session) {
     options = list(show = 10)
     table = df$match %>%
       dplyr::rename('Target Lexeme' = target_lemma,
-             'Token Produced' = token
+                    'Token Produced' = token
       )
     return(table)
   })
@@ -211,7 +215,7 @@ app_server <- function(input, output, session) {
   # More information modal
   observeEvent(input$faq, {
     showModal(modalDialog(
-      shiny::includeMarkdown("www/faq.md"),
+      shiny::includeMarkdown(system.file("app/www/faq.md", package = "coreLexicon")),
       easyClose = TRUE,
       footer = NULL,
       size = "l"
@@ -220,12 +224,12 @@ app_server <- function(input, output, session) {
   # readme modal. probabily will be deleted
   observeEvent(input$bio, {
     showModal(modalDialog(
-      shiny::includeMarkdown("www/bio.md"),
+      shiny::includeMarkdown(system.file("app/www/bio.md", package = "coreLexicon")),
       size = "l",
       easyClose = TRUE,
       footer = NULL
     ))
   })
   
-
+  
 }
