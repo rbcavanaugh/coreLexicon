@@ -45,9 +45,9 @@ app_server <- function( input, output, session ) {
   
   observeEvent(input$stim,{
     if(input$stim != "cinderella"){
-      shinyjs::disable("adj")
+      shinyjs::hide("adj")
     } else {
-      shinyjs::enable("adj")
+      shinyjs::show("adj")
     }
   })
   
@@ -225,6 +225,20 @@ app_server <- function( input, output, session ) {
   observeEvent(input$bio, {
     showModal(modalDialog(
       shiny::includeMarkdown(system.file("app/www/bio.md", package = "coreLexicon")),
+      size = "l",
+      easyClose = TRUE,
+      footer = NULL
+    ))
+  })
+  
+  ################################### OTHER MODALS ############################
+  #trascription rules
+  observeEvent(input$full_transcription, {
+    showModal(modalDialog(
+      tags$iframe(src = "www/full_transcription.html",
+                  frameBorder="0",
+                  height = "650px",
+                  width = "100%"),
       size = "l",
       easyClose = TRUE,
       footer = NULL

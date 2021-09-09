@@ -9,9 +9,8 @@
           column(width = 5, 
                  h4("Scoring Rules"),
                           tags$ol(
-                            tags$li("Following Core-lex rules, check that target lexemes match tokens and that target
+                            tags$li("Check that target lexemes match tokens and that target
                                     lexemes without a matched token were not missed by the algorithm."),
-                            tags$li("Add 1 point for a possessive [ 's ] (Cinderella only)"),
                             tags$li("Count any variation of mom/mother or dad/father.")
                           )
         ),

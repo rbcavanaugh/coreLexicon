@@ -57,10 +57,10 @@ get_intro_div <- function(){
                      tabPanelBody(value = "glide3",
                                   fluidRow(
                                     column(width = 5, offset = 1,
-                                           h4("Transcrition"),br(),
-                                              includeMarkdown(system.file("app/www/transcribing.md", package = "coreLexicon")),
-                                           "We recommended copying and saving samples into a text editor
-                                   (e.g. microsoft word) after transcribing and before scoring.", br(), br(),
+                                           h4("Transcribing"),
+                                           div(style="height:500px; overflow:auto;",
+                                               includeMarkdown(system.file("app/www/transcribing.md", package = "mainConcept"))
+                                           ),
                                    checkboxInput(inputId = "adj",
                                                  label = "Check if transcription included a Possessive ['s] (Cinderella only)", 
                                                  value = FALSE
@@ -73,6 +73,8 @@ get_intro_div <- function(){
                                                         width = "100%",
                                                         value = transcriptDefault
                                           ),
+                                          actionButton("full_transcription",
+                                                       "Detailed transcription rules")
                                    )
                                   ),
                                   fluidRow(
