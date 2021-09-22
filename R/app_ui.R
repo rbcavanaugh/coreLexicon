@@ -12,7 +12,18 @@ app_ui <- function(request) {
     waiter::use_waiter(),
     waiter::waiter_preloader(html = waiter::spin_dots(), color = "white"),
     shinyjs::useShinyjs(),
-    navbarPage(title = "Core Lexicon Analysis",
+    navbarPage(title = div(
+                          div("Core Lexicon Analysis"), # title
+                          div(id = "navbar-right",
+                          # buttons on the right
+                          # not always shown
+                          downloadButton("report", "Download Report"),
+                          downloadButton("downloadData", "Download Data"),
+                          actionButton("start_over",
+                                       "Start Over",
+                                       icon = icon("undo")),
+                          style = "position: absolute; right: 5px; top: 8px;")
+                ),
                id = "mainpage",
                footer = tags$div(
                  id = "footer_id",

@@ -39,7 +39,27 @@ app_server <- function( input, output, session ) {
   })
   
   
-  ################################## OBSERVERS ###########################
+  ################################## OBSERVERS ###################################
+  # ------------------------------------------------------------------------------
+  ################################################################################
+  
+  # larger observer to disable, hide and show specific things:
+  
+  observe({
+    # disables the navbar buttons
+    shinyjs::disable(selector = "#mainpage li a[data-value=results]")
+    shinyjs::disable(selector = "#mainpage li a[data-value=scoring]")
+    shinyjs::disable(selector = "#mainpage li a[data-value=intro]")
+    # shows download report button only on the results page. 
+    if(input$mainpage != "results"){
+      shinyjs::hide("report")
+      shinyjs::hide("downloadData")
+    } else {
+      shinyjs::show("report")
+      shinyjs::show("downloadData")
+    }
+    
+  })
   
   ##### DISABLE #######
   
@@ -59,6 +79,7 @@ app_server <- function( input, output, session ) {
   # initialize values in here so that they reset whever someone hits start. 
   observeEvent(input$start, {
     # got to slides
+    values$time = Sys.time()
     updateNavbarPage(session, "mainpage", selected = "scoring")
     
   })
@@ -127,29 +148,19 @@ app_server <- function( input, output, session ) {
   # core lexicon results plot 
   output$plot_cl <- renderPlot({
     x$show()
-    get_results_plot(dat = selectedData())
+    get_results_plot(dat = selectedData(), time = input$time)
   })
   
   #### results text ####   
   
   output$words_results <-
     renderText({
-      paste0("There were ", selectedData()[["scores"]][1], " core words produced. This score is in the ",
-             selectedData()[["score"]][1,4], " percentile for individuals with aphasia and ",
-             selectedData()[["score"]][1,3], " percentile for individuals without stroke or aphasia."
+      acc = results_text(selectedData(), "acc", input$time)
+      eff = results_text(selectedData(), "eff", input$time)
+      return(
+        paste(acc, eff)
       )
-      
     })
-  
-  output$eff_results <-
-    renderText({
-      paste0("There were ", round(selectedData()[["scores"]][2],1), " core words per minute produced. This score is in the ",
-             selectedData()[["score"]][2,4], " percentile for individuals with aphasia and ",
-             selectedData()[["score"]][2,3], " percentile for individuals without stroke or aphasia."
-      )
-      
-    })
-  
   
   ################################## REACTIVE VALUES ############################
   
@@ -212,7 +223,7 @@ app_server <- function( input, output, session ) {
   ################################## FOOTER MODAL ################################
   # ------------------------------------------------------------------------------
   ################################################################################
-  # More information modal
+  # FAQ information modal
   observeEvent(input$faq, {
     showModal(modalDialog(
       shiny::includeMarkdown(system.file("app/www/faq.md", package = "coreLexicon")),
@@ -221,10 +232,19 @@ app_server <- function( input, output, session ) {
       size = "l"
     ))
   })
-  # readme modal. probabily will be deleted
+  # BIO modal. 
   observeEvent(input$bio, {
     showModal(modalDialog(
       shiny::includeMarkdown(system.file("app/www/bio.md", package = "coreLexicon")),
+      size = "l",
+      easyClose = TRUE,
+      footer = NULL
+    ))
+  })
+  # references modal. 
+  observeEvent(input$references, {
+    showModal(modalDialog(
+      shiny::includeMarkdown(system.file("app/www/references.md", package = "coreLexicon")),
       size = "l",
       easyClose = TRUE,
       footer = NULL
@@ -245,5 +265,63 @@ app_server <- function( input, output, session ) {
     ))
   })
   
+  
+  ################################## DOWNLOADS #################################
+  # --------------------------------------------------------------------------
+  ############################################################################
+  
+  ############## Download data ##################################################3
+  
+  output$downloadData <- downloadHandler(
+    filename = function() {
+      paste(input$stimMC, "_MC_summary.xlsx", sep = "")
+    },
+    content = function(file) {
+      openxlsx::write.xlsx(
+        # get_download_data(
+        #   current_tab = input$mainpage,
+        #   values = values,
+        #   results_tab = results_mca_tab())
+        # , file
+        )
+    }
+  )
+  
+  ##################################### REPORT #################################
+  
+  output$report <- downloadHandler(
+    # For PDF output, change this to "report.pdf"
+    filename = "report.pdf",
+    content = function(file) {
+      # Copy the report file to a temporary directory before processing it, in
+      # case we don't have write permissions to the current working dir (which
+      # can happen when deployed).
+      tempReport <- system.file("report.Rmd", package = "coreLexicon")#file.path(tempdir(), "report.Rmd")
+      file.copy("report.Rmd", tempReport, overwrite = TRUE)
+      
+      # Set up parameters to pass to Rmd document
+      params <- list(
+        # params go here...
+        #norms: NA 
+        results_text = paste(
+          results_text(selectedData(), "acc", input$time),
+          results_text(selectedData(), "eff", input$time)
+        ),
+        stim = input$stim,
+        name = ifelse(nchar(input$name)>0, input$name, "X"),
+        time = input$time,
+        data = selectedData(),
+        start_time = values$time,
+        notes = input$notes)
+      
+      # Knit the document, passing in the `params` list, and eval it in a
+      # child of the global environment (this isolates the code in the document
+      # from the code in this app).
+      rmarkdown::render(tempReport, output_file = file,
+                        params = params,
+                        envir = new.env(parent = globalenv())
+      )
+    }
+  )
   
 }

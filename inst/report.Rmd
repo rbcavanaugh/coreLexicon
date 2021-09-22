@@ -1,0 +1,94 @@
+---
+title: "Core Lexicon Analysis: report"
+output: pdf_document
+urlcolor: blue
+params:
+  norms: NA 
+  results_text: NA
+  stim: NA
+  start_time: NA 
+  name: NA
+  notes: NA
+  time: NA
+  data: NA
+header-includes:
+    - \usepackage{booktabs}
+    - \usepackage{tabu}
+    - \usepackage{longtable}
+    - \usepackage{float}
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.pos = 'H')
+```
+
+
+### Summary of measure
+
+Core Lexicon Analysis is a discourse assessment originally developed by Dalton & Richardson (2015) that measures the typicality of words used in a semi-structured discourse task. CoreLex checklists have been developed for a variety of widely used discourse tasks (including picture description, picture sequence, story retell, procedures, and unfamiliar narrative production) have been developed using large samples of healthy control speakers (Dalton et al., 2020). CoreLex is a micro-linguistic measure which provides information about word retrieval and lexical access in connected speech samples. CoreLex checklists consist of lemmas that are scored as either present (1) or absent (0), which makes scoring very simple.
+
+CoreLex has shown good sensitivity in differentiating between controls and individuals with aphasia (Dalton & Richardson, 2015; Fromm et al., 2017), between individuals with fluent and non-fluent aphasia (Kim et al., 2019; Kim et al., 2021), and between aphasia subtypes (Dalton & Richardson, 2015; Fromm et al., 2017). Studies have also demonstrated that CoreLex is related to standardized measures of aphasia (Kim et al., 2019, Kim et al., 2021), other discourse measures (Alyahya et al., 2021; Dalton & Richardson, 2019; Kim & Wright, 2020) and picture naming (Alyahya et al., 2021). Preliminary evidence also suggests that corelex might be sensitive to treatment-induced changes in some PWA (Dalton et al., 2020; Dede & Hoover, 2021).
+
+### Results
+
+This test was completed by `r params$name` and scored on `r format(params$start_time, format="%B %d %Y %R %Z")`. These results are specific to the ***`r paste(unlist(strsplit(params$stim, split = "_")), collapse = " ")` stimulus.*** 
+
+```{r, echo = F, results = 'asis'}
+cat(params$results_text)
+```
+
+<!-- ### Summary Table -->
+
+```{r, echo = F, eval = F}
+# not currently used. 
+kableExtra::kbl(params$summary_table,
+                format = "latex",
+                booktabs = TRUE,
+                caption = "Summary of results from MCA") %>%
+  kableExtra::kable_styling(latex_options = "HOLD_position")
+```
+
+
+### Plots
+
+```{r, echo=F, fig.height=3, fig.width=7, warning = F}
+get_results_plot(dat = params$data, time = params$time, basesize = 10)
+```
+
+**About these plots:**
+
+- *The figure shows two density plots that represent the distribution of the discourse variables. (A density plot is essentially a smoothed version of a histogram.)*
+
+- *The orange plot is the density plot for persons with aphasia. The purple plot is the density plot for controls. (These plots closely correspond to the values in our publications [Richardson & Dalton, 2015, 2019; Dalton & Richardson, 2018; Dalton et al., 2020], but are updated several times a year with additional participants scored in Dr. Richardson’s lab.)*
+
+- *The vertical dashed line represents the discourse variable score for your patient/participant.*
+
+### Administration notes 
+
+*If notes were entered prior to scoring, they will appear below*
+
+```{r, echo = F, results = 'asis'}
+cat(params$notes)
+```
+
+
+### References
+
+Dalton, S. G., & Richardson, J. D. (2015). Core-lexicon and main-concept production during picture-sequence description in adults without brain damage and adults with aphasia. American Journal of Speech-Language Pathology, 24(4), S923-S938.
+
+Dalton, S. G. H., Hubbard, H. I., & Richardson, J. D. (2020). Moving toward non-transcription based discourse analysis in stable and progressive aphasia. Seminars in Speech and Language, 41(1), 32-44.
+Dalton, S. G. H., Kim, H., Richardson, J. D., & Wright, H. H. (2020). A compendium of core lexicon checklists. Seminars in Speech and Language, 41(1), 45-60.
+
+DeDe, G., & Hoover, E. (2021). Measuring Change at the Discourse-Level Following Conversation Treatment: Examples From Mild and Severe Aphasia. Topics in Language Disorders, 41(1), 5-26.
+
+Fromm, D., Forbes, M., Holland, A., Dalton, S. G., Richardson, J., & MacWhinney, B. (2017). Discourse characteristics in aphasia beyond the Western Aphasia Battery cutoff. American Journal of Speech-Language Pathology, 26(3), 762-768.
+
+Kim, H., & Wright, H. H. (2020). Concurrent validity and reliability of the core lexicon measure as a measure of word retrieval ability in aphasia narratives. American Journal of Speech-Language Pathology, 29(1), 101-110.
+
+Kim, H., Kintz, S., & Wright, H. H. (2021). Development of a measure of function word use in narrative discourse: core lexicon analysis in aphasia. International Journal of Language & Communication Disorders, 56(1), 6-19.
+
+Kim, H., Kintz, S., Zelnosky, K., & Wright, H. H. (2019). Measuring word retrieval in narrative discourse: Core lexicon in aphasia. International Journal of Language & Communication Disorders, 54(1), 62-78.
+
+### About this report
+
+This report was generated by the coreLexicon shiny web app located at https://aphasia-apps.shinyapps.io/coreLexicon/. This web-app is open source and the source code is located at https://github.com/aphasia-apps/coreLexicon Comments, feedback, and bug-reports can be made on the github page. The app was developed by Robert Cavanaugh, Sarah Grace Dalton, and Jessica Richardson.

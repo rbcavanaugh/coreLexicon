@@ -1,9 +1,22 @@
 Package: coreLexicon
-Title: Core Lexicon Shiny App
-Version: 0.0.0.9000
-Authors@R: person('Robert', 'Cavanaugh', email = 'rob.cavanaugh@pitt.edu', role = c('cre', 'aut'))
-Description: Shiny app for Core Lexicon Analysis.
-License: GPL (>= 3)
+Title: An open-source web-app for core lexicon analysis in aphasia
+Date: 2021-09-21
+Version: 0.0.1.0000
+Authors@R: 
+    c(
+    person(given = 'Robert',
+           family = 'Cavanaugh',
+           email = 'rob.cavanaugh@pitt.edu',
+           role = c('cre', 'aut')),
+    person(given = "Sarah Grace",
+           family = "Dalton",
+           role = "aut"),
+    person(given = "Jessica",
+           family = "Richardson",
+           role = "aut")
+    )
+Description: A Shiny web-app for core lexicon analysis.
+License: AGPL (>= 3)
 Imports: 
     config (>= 0.3.1),
     golem (>= 0.3.1),

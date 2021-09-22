@@ -4,7 +4,7 @@
 \alias{get_results_plot}
 \title{get results plot}
 \usage{
-get_results_plot(dat)
+get_results_plot(dat, time, basesize = 16)
 }
 \arguments{
 \item{dat}{data}
