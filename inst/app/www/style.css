@@ -8,6 +8,10 @@ img {
   height: auto;
 }
 
+.modal-lg, .modal-xl {
+    max-width: 1000px;
+}
+
 /*.navbar {
   margin-bottom: 5px;
 }
@@ -47,9 +51,9 @@ img {
 
 }
 
-a {
+/*a {
   color:black;
-}
+}*/
 
 .fa, .fab {
   margin-right: 5px;

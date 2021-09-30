@@ -188,6 +188,7 @@ app_server <- function( input, output, session ) {
   
   observe({
     accuracy = unlist(sapply(1:nrow(data()), function(i) input[[paste0(get_cor_id(), i)]]))
+    print(accuracy)
     values$score_num_data <- sum(as.numeric(accuracy))
     
   })
@@ -278,11 +279,12 @@ app_server <- function( input, output, session ) {
     },
     content = function(file) {
       openxlsx::write.xlsx(
-        # get_download_data(
-        #   current_tab = input$mainpage,
-        #   values = values,
-        #   results_tab = results_mca_tab())
-        # , file
+        list(
+          tibble::tibble(transcript = input$transcr),
+          selectedData2(),
+          selectedData()$score
+        )
+        , file
         )
     }
   )
