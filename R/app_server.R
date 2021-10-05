@@ -295,35 +295,36 @@ app_server <- function( input, output, session ) {
     # For PDF output, change this to "report.pdf"
     filename = "report.pdf",
     content = function(file) {
-      # Copy the report file to a temporary directory before processing it, in
-      # case we don't have write permissions to the current working dir (which
-      # can happen when deployed).
-      tempReport <- system.file("report.Rmd", package = "coreLexicon")#file.path(tempdir(), "report.Rmd")
-      file.copy("report.Rmd", tempReport, overwrite = TRUE)
-      
-      # Set up parameters to pass to Rmd document
-      params <- list(
-        # params go here...
-        #norms: NA 
-        results_text = paste(
-          results_text(selectedData(), "acc", input$time),
-          results_text(selectedData(), "eff", input$time)
-        ),
-        stim = input$stim,
-        name = ifelse(nchar(input$name)>0, input$name, "X"),
-        time = input$time,
-        data = selectedData(),
-        start_time = values$time,
-        notes = input$notes)
-      
-      # Knit the document, passing in the `params` list, and eval it in a
-      # child of the global environment (this isolates the code in the document
-      # from the code in this app).
-      rmarkdown::render(tempReport, output_file = file,
-                        params = params,
-                        envir = new.env(parent = globalenv())
-      )
-    }
-  )
+      withProgress(message = 'Rendering, please wait!', {
+        # Copy the report file to a temporary directory before processing it, in
+        # case we don't have write permissions to the current working dir (which
+        # can happen when deployed).
+        tempReport <- system.file("report.Rmd", package = "coreLexicon")#file.path(tempdir(), "report.Rmd")
+        file.copy("report.Rmd", tempReport, overwrite = TRUE)
+        
+        # Set up parameters to pass to Rmd document
+        params <- list(
+          # params go here...
+          #norms: NA 
+          results_text = paste(
+            results_text(selectedData(), "acc", input$time),
+            results_text(selectedData(), "eff", input$time)
+          ),
+          stim = input$stim,
+          name = ifelse(nchar(input$name)>0, input$name, "X"),
+          time = input$time,
+          data = selectedData(),
+          start_time = values$time,
+          notes = input$notes)
+        
+        # Knit the document, passing in the `params` list, and eval it in a
+        # child of the global environment (this isolates the code in the document
+        # from the code in this app).
+        rmarkdown::render(tempReport, output_file = file,
+                          params = params,
+                          envir = new.env(parent = globalenv())
+        )
+      })
+  })
   
 }
