@@ -18,10 +18,8 @@ core_lex <- function(text, stimulus){
   text <- tibble::tibble(tidytext::unnest_tokens(text, word, text)) %>%
     dplyr::distinct() # unique list of tokens...
   # lemmatizes all of the tokens
-  print(text)
-  text$lemma <- textstem::lemmatize_words(text$word)
+  text$lemma <- textstem::lemmatize_words(text$word, dictionary = new_dict)
   colnames(text) = c('token', 'produced_lemma')
-  print(text)
   return_list <- list()
   
   return_list$match <- stim %>%

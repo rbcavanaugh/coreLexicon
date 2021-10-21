@@ -12,7 +12,8 @@
                             tags$li("Check that target lexemes match tokens and that target
                                     lexemes without a matched token were not missed by the algorithm."),
                             tags$li("Count any variation of mom/mother or dad/father.")
-                          )
+                          ),
+                 uiOutput("transcription_reference")
         ),
         column(width= 7, 
                h4("Scoring Table"),

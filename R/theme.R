@@ -6,7 +6,7 @@ minimal_theme <- function(){
         bootswatch = "default",
          base_font = bslib::font_google("Open Sans"),
          heading_font = bslib::font_google("Open Sans"),
-         version = "4",
+         version = "5",
          `enable-rounded` = T,
          `enable-transitions` = F,
          primary = "#1665AC",

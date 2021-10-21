@@ -12,11 +12,20 @@ img {
     max-width: 1000px;
 }
 
-/*.navbar {
-  margin-bottom: 5px;
+.navbar {
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
 }
 
-.navbar .navbar-nav {
+.form-group {
+    margin-bottom: 0rem;
+}
+
+.table>:not(caption)>*>* {
+  padding: 0px;
+}
+
+/*.navbar .navbar-nav {
   display:none;
 }*/
 
@@ -63,6 +72,12 @@ img {
 h5 {
   padding-bottom: 5px;
   margin: 0;
+}
+
+.navbar-brand {
+margin-right: 0;
+padding-top: 2px;
+padding-bottom: 2px;
 }
 
 

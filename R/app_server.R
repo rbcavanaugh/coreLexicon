@@ -46,6 +46,8 @@ app_server <- function( input, output, session ) {
   # larger observer to disable, hide and show specific things:
   
   observe({
+    # or just hide them:
+    shinyjs::hide(selector = ".nav-item")
     # disables the navbar buttons
     shinyjs::disable(selector = "#mainpage li a[data-value=results]")
     shinyjs::disable(selector = "#mainpage li a[data-value=scoring]")
@@ -81,6 +83,7 @@ app_server <- function( input, output, session ) {
     # got to slides
     values$time = Sys.time()
     updateNavbarPage(session, "mainpage", selected = "scoring")
+    print(values$time)
     
   })
   
@@ -121,14 +124,17 @@ app_server <- function( input, output, session ) {
   escape = FALSE,
   selection = 'none',
   server = FALSE,
+  rownames= FALSE,
   options = list(dom = 't',
                  ordering = TRUE,
                  scrollY = "400px",
                  #scroller = TRUE,
                  fixedColumns = list(heightMatch = 'none'),
                  #scrollCollapse = TRUE,
-                 columnDefs = list(list(className = 'dt-center', targets = 0:3)),
-                 paging = FALSE
+                 columnDefs = list(list(className = 'dt-center', targets = 0:2)),
+                 paging = FALSE,
+                 autoWidth = TRUE,
+                 columnDefs = list(list(width = '33%', targets = 0:1))
   ),
   callback = htmlwidgets::JS(
     "table.rows().every(function(i, tab, row) {
@@ -188,8 +194,8 @@ app_server <- function( input, output, session ) {
   
   observe({
     accuracy = unlist(sapply(1:nrow(data()), function(i) input[[paste0(get_cor_id(), i)]]))
-    print(accuracy)
     values$score_num_data <- sum(as.numeric(accuracy))
+    
     
   })
   
@@ -218,6 +224,13 @@ app_server <- function( input, output, session ) {
     
     get_selected_data(stim=input$stim, score_num_data = values$score_num_data, time=input$time, adj = input$adj)
     
+  })
+  
+  output$transcription_reference <- renderUI({
+    div(br(),
+      h4("Transcript"), 
+    tags$em(input$transcr)
+    )
   })
   
   
