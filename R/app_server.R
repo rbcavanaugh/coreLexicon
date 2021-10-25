@@ -125,16 +125,17 @@ app_server <- function( input, output, session ) {
   selection = 'none',
   server = FALSE,
   rownames= FALSE,
-  options = list(dom = 't',
+  options = list(dom = 'ft',
                  ordering = TRUE,
-                 scrollY = "400px",
+                 scrollY = "500px",
                  #scroller = TRUE,
                  fixedColumns = list(heightMatch = 'none'),
                  #scrollCollapse = TRUE,
-                 columnDefs = list(list(className = 'dt-center', targets = 0:2)),
+                 columnDefs = list(list(className = 'dt-left', targets = 0:2),
+                                   list(width = '25%', targets = 2)),
                  paging = FALSE,
-                 autoWidth = TRUE,
-                 columnDefs = list(list(width = '33%', targets = 0:1))
+                 ordering = FALSE,
+                 autoWidth = TRUE
   ),
   callback = htmlwidgets::JS(
     "table.rows().every(function(i, tab, row) {
@@ -145,6 +146,7 @@ app_server <- function( input, output, session ) {
       Shiny.unbindAll(table.table().node());
       Shiny.bindAll(table.table().node());")
   )
+
   
   # not sure what this is...
   output$sel = renderTable({
@@ -212,6 +214,7 @@ app_server <- function( input, output, session ) {
     df <- core_lex(input$transcr, task)
     options = list(show = 10)
     table = df$match %>%
+      dplyr::mutate(token = ifelse(token=="NA", "-", token)) %>%
       dplyr::rename('Target Lexeme' = target_lemma,
                     'Token Produced' = token
       )
@@ -227,9 +230,15 @@ app_server <- function( input, output, session ) {
   })
   
   output$transcription_reference <- renderUI({
-    div(br(),
-      h4("Transcript"), 
-    tags$em(input$transcr)
+    
+    if(nchar(input$transcr)<3){
+      out = "Please enter a transcript on the previous page"
+    } else {
+      out = input$transcr
+    }
+    
+    div(
+    tags$em(out)
     )
   })
   
@@ -263,6 +272,19 @@ app_server <- function( input, output, session ) {
       easyClose = TRUE,
       footer = NULL
     ))
+  })
+  
+  # Footer modal for feedback:
+  observeEvent(input$feedback, {
+    showModal(modalDialog(
+      tags$iframe(src = "https://docs.google.com/forms/d/e/1FAIpQLSf6Ml8j4_NtSuiUy35D8Ue1O14PWIJ8vcV1RI8U-pXfp84mpg/viewform?embedded=true",
+                  frameBorder="0",
+                  height = "650px",
+                  width = "950px"),
+      size = "l",
+      easyClose = TRUE
+    ))
+    
   })
   
   ################################### OTHER MODALS ############################

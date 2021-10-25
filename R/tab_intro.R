@@ -14,7 +14,7 @@ get_intro_div <- function() {
                      align = "center",
                      width = 8,
                      offset = 2,
-                     h5("Welcome to the Core Lexicon Analysis Shiny App"),
+                     h5("Welcome to the Core Lexicon Analysis Web-App"),br(),
                      div(
                        style = "display: inline-block; text-align: left;",
                        includeMarkdown(
@@ -23,7 +23,10 @@ get_intro_div <- function() {
                        br(),
                        # start!
                        div(align = "center",
-                           actionButton("glide_next1", "Next"))
+                           actionButton("glide_next1", "Get Started"))
+                     ),
+                     div(style = "margin-top: 30px;",
+                     tags$em("Note: This app is currently under development and is not ready for clinical or research use.", style = "color: red;")
                      )
                    )),
       
@@ -36,7 +39,7 @@ get_intro_div <- function() {
                        div(
                          style = "display: inline-block; text-align: left;",
                          
-                         h5("Input participant information"),
+                         h5("Enter participant information"),
                          br(),
                          textInput("name", "Enter a Name"),
                          selectInput(
@@ -106,8 +109,8 @@ get_intro_div <- function() {
                          "Enter transcript (separate utterances with a period)",
                          height = "400px",
                          width = "100%",
-                         value = transcriptDefault
-                       ),
+                         value = "",#transcriptDefault
+                       ),br(),
                        actionButton("full_transcription",
                                     "Detailed transcription rules")
                      )

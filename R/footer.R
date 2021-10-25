@@ -21,16 +21,23 @@ footer_div <- function(){
                  style = "background:transparent; border:none;"
                ),
                actionButton(
+                 inputId = "references",
+                 label = "References",
+                 icon = icon("book"),
+                 style = "background:transparent; border:none;"
+               ),
+               actionButton(
                  inputId = "bio",
                  label = "About Us",
                  icon = icon("user-friends"),
                  style = "background:transparent; border:none;"
                ),
                actionButton(
-                 inputId = "references",
-                 label = "References",
-                 icon = icon("book"),
+                 inputId = "feedback",
+                 label = "Send us feedback!",
+                 icon = icon("comment"),
                  style = "background:transparent; border:none;"
+                 
                )
             )
       )

@@ -44,7 +44,7 @@ app_ui <- function(request) {
                ############################ Results ###################################
                tabPanel(value = "results", title = "Results",
                         get_results_div()
-               ), #br(), br(), br(), br()
+               )#, br(), br(), br(), br()
                ########################################################################
                
     )
