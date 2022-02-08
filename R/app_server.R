@@ -9,18 +9,7 @@ app_server <- function( input, output, session ) {
   
   
   values <- reactiveValues()
-  ################# WAITERS #####################
-  
-  #establishes plot loading 
-  w <- waiter::Waiter$new(id = "table_cl",
-                          html = waiter::spin_loader(), 
-                          color = "white")
-  
-  #establishes plot loading 
-  x <- waiter::Waiter$new(id = "plot_cl",
-                          html = waiter::spin_loader(), 
-                          color = "white")
-  
+
   ###########################Intro tab next and back############################
   observeEvent(input$glide_next1,{
     updateTabsetPanel(session, "glide", "glide2")
@@ -47,18 +36,19 @@ app_server <- function( input, output, session ) {
   
   observe({
     # or just hide them:
-    shinyjs::hide(selector = ".nav-item")
+    #shinyjs::hide(selector = ".nav-item")
+    # shows download report button only on the results page. 
     # disables the navbar buttons
     shinyjs::disable(selector = "#mainpage li a[data-value=results]")
     shinyjs::disable(selector = "#mainpage li a[data-value=scoring]")
     shinyjs::disable(selector = "#mainpage li a[data-value=intro]")
-    # shows download report button only on the results page. 
+    
     if(input$mainpage != "results"){
-      shinyjs::hide("report")
-      shinyjs::hide("downloadData")
+      shinyjs::disable("report")
+      shinyjs::disable("downloadData")
     } else {
-      shinyjs::show("report")
-      shinyjs::show("downloadData")
+      shinyjs::enable("report")
+      shinyjs::enable("downloadData")
     }
     
   })
@@ -73,51 +63,32 @@ app_server <- function( input, output, session ) {
     }
   })
   
-  
-  
   ################################## START ASSESSMENT ############################
   # start button. sets the i value to 1 corresponding to the first slide
   # switches to the assessment tab
   # initialize values in here so that they reset whever someone hits start. 
   observeEvent(input$start, {
-    # got to slides
     values$time = Sys.time()
     updateNavbarPage(session, "mainpage", selected = "scoring")
-    print(values$time)
-    
   })
   
   observeEvent(input$go_back, {
-    # got to slides
     updateNavbarPage(session, "mainpage", selected = "intro")
-    
   })
   
   observeEvent(input$go_to_results, {
-    # got to slides
     updateNavbarPage(session, "mainpage", selected = "results")
-    
   })
   
   #############################START OVER#########################################
   
   observeEvent(input$start_over,{
-    
-    shinyjs::reset("intro_tab")
-    updateTabsetPanel(session, "glide", "glide1")
-    
-    # immediately navigate back to previous tab
-    updateTabsetPanel(session, "mainpage",
-                      selected = "intro")
-    
+    session$reload()
   })
-  
-  
   
   ################################## OUTPUTS ####################################
   # scoring table
   output$table_cl = DT::renderDT({
-    w$show()
     data()
     
   },
@@ -147,15 +118,8 @@ app_server <- function( input, output, session ) {
       Shiny.bindAll(table.table().node());")
   )
 
-  
-  # not sure what this is...
-  output$sel = renderTable({
-    score_num()
-  })
-  
   # core lexicon results plot 
   output$plot_cl <- renderPlot({
-    x$show()
     get_results_plot(dat = selectedData(), time = input$time)
   })
   
@@ -165,9 +129,8 @@ app_server <- function( input, output, session ) {
     renderText({
       acc = results_text(selectedData(), "acc", input$time)
       eff = results_text(selectedData(), "eff", input$time)
-      return(
-        paste(acc, eff)
-      )
+      norms = "Norms based on publications (Richardson & Dalton, 2015, 2019; Dalton & Richardson, 2018; Dalton et al., 2020), and are updated several times a year with additional participants scored in Dr. Richardson’s lab."
+      return(paste(acc, eff, norms))
     })
   
   ################################## REACTIVE VALUES ############################
@@ -184,21 +147,20 @@ app_server <- function( input, output, session ) {
   data <- reactive({
     df = selectedData2()
     for (i in 1:nrow(df)) {
-      df[["Correct"]][i] <- as.character(checkboxInput(paste0(get_cor_id(), i),
-                                                       label="",
-                                                       value = df$produced[i]
+      df[["Correct"]][i] <- 
+        as.character(checkboxInput(paste0(get_cor_id(), i),
+                                         label="",
+                                         value = df$produced[i]
       ))
       
     }
-    df %>% dplyr::select(-produced)
+    df = subset(df, select = -produced)
   })
   
   
   observe({
     accuracy = unlist(sapply(1:nrow(data()), function(i) input[[paste0(get_cor_id(), i)]]))
     values$score_num_data <- sum(as.numeric(accuracy))
-    
-    
   })
   
   # this makes the table for scoring....
@@ -224,22 +186,19 @@ app_server <- function( input, output, session ) {
   # this calculates the scores....
   # Reactive that returns the whole dataset if there is no brush
   selectedData <- reactive({
-    
-    get_selected_data(stim=input$stim, score_num_data = values$score_num_data, time=input$time, adj = input$adj)
-    
+    get_selected_data(stim=input$stim,
+                      score_num_data = values$score_num_data,
+                      time=input$time,
+                      adj = input$adj)
   })
   
   output$transcription_reference <- renderUI({
-    
     if(nchar(input$transcr)<3){
       out = "Please enter a transcript on the previous page"
     } else {
       out = input$transcr
     }
-    
-    div(
-    tags$em(out)
-    )
+    div(tags$em(out))
   })
   
   
@@ -256,18 +215,9 @@ app_server <- function( input, output, session ) {
     ))
   })
   # BIO modal. 
-  observeEvent(input$bio, {
+  observeEvent(input$about, {
     showModal(modalDialog(
       shiny::includeMarkdown(system.file("app/www/bio.md", package = "coreLexicon")),
-      size = "l",
-      easyClose = TRUE,
-      footer = NULL
-    ))
-  })
-  # references modal. 
-  observeEvent(input$references, {
-    showModal(modalDialog(
-      shiny::includeMarkdown(system.file("app/www/references.md", package = "coreLexicon")),
       size = "l",
       easyClose = TRUE,
       footer = NULL
@@ -284,7 +234,6 @@ app_server <- function( input, output, session ) {
       size = "l",
       easyClose = TRUE
     ))
-    
   })
   
   ################################### OTHER MODALS ############################
@@ -334,7 +283,7 @@ app_server <- function( input, output, session ) {
         # Copy the report file to a temporary directory before processing it, in
         # case we don't have write permissions to the current working dir (which
         # can happen when deployed).
-        tempReport <- system.file("report.Rmd", package = "coreLexicon")#file.path(tempdir(), "report.Rmd")
+        tempReport <- system.file("report.Rmd", package = "coreLexicon")
         file.copy("report.Rmd", tempReport, overwrite = TRUE)
         
         # Set up parameters to pass to Rmd document

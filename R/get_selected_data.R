@@ -21,8 +21,6 @@ get_selected_data <- function(stim, score_num_data, time, adj){
       stim == 'sandwich' ~ 5
     )
     
-    #df <- core_lex(transcr, task, age)
-    #matches <- df$match
     score_num = score_num_data + adj #sum(matches$produced) +
     score_eff = score_num/(time/60)
     

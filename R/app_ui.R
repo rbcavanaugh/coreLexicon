@@ -9,27 +9,9 @@ app_ui <- function(request) {
     # Leave this function for adding external resources
     golem_add_external_resources(),
     # Your application UI logic 
-    waiter::use_waiter(),
-    waiter::waiter_preloader(html = waiter::spin_dots(), color = "white"),
     shinyjs::useShinyjs(),
-    navbarPage(title = div(
-                          div("Core Lexicon Analysis"), # title
-                          div(id = "navbar-right",
-                          # buttons on the right
-                          # not always shown
-                          downloadButton("report", "Download Report"),
-                          downloadButton("downloadData", "Download Data"),
-                          actionButton("start_over",
-                                       "Start Over",
-                                       icon = icon("undo")),
-                          style = "position: absolute; right: 5px; top: 8px;")
-                ),
+    navbarPage(title = "Core Lexicon Analysis",
                id = "mainpage",
-               footer = tags$div(
-                 id = "footer_id",
-                 class = "footer",
-                 footer_div()
-               ),
                
                theme = minimal_theme(),
                
@@ -44,7 +26,16 @@ app_ui <- function(request) {
                ############################ Results ###################################
                tabPanel(value = "results", title = "Results",
                         get_results_div()
-               )#, br(), br(), br(), br()
+               ),
+                !!!list(bslib::nav_spacer(),
+                        bslib::nav_item(pagetitle()),
+                        bslib::nav_item(
+                          tags$a(icon("github"),
+                                 href = "https://github.com/aphasia-apps/coreLexicon",
+                                 target = "_blank",
+                                 style = "color:black;")
+                        )
+                )
                ########################################################################
                
     )

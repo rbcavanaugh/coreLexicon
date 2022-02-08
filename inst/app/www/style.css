@@ -21,9 +21,9 @@ img {
     margin-bottom: 0rem;
 }
 
-.table>:not(caption)>*>* {
+/*.table>:not(caption)>*>* {
   padding: 0px 20px;
-}
+}*/
 
 /*.navbar .navbar-nav {
   display:none;
@@ -46,18 +46,6 @@ img {
 
 .btn-group, .btn-group-vertical {
     padding: 2px 0px;
-}
-
-.footer{
-  position:fixed;
-  bottom:0;
-  right:0;
-  left:0;
-  background:#e9ecef;
-  padding-bottom:0px;
-  margin-top: 0px;
-  box-sizing:border-box;
-
 }
 
 /*a {
