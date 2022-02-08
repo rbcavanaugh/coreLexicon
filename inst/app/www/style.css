@@ -21,9 +21,9 @@ img {
     margin-bottom: 0rem;
 }
 
-/*.table>:not(caption)>*>* {
-  padding: 0px 20px;
-}*/
+.table>:not(caption)>*>* {
+  padding: 0px 5px;
+}
 
 /*.navbar .navbar-nav {
   display:none;
