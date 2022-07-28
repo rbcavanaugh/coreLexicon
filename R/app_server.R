@@ -51,6 +51,12 @@ app_server <- function( input, output, session ) {
       shinyjs::enable("downloadData")
     }
     
+    if(input$stim==""){
+      shinyjs::disable("glide_next2")
+    } else {
+      shinyjs::enable("glide_next2")
+    }
+    
   })
   
   ##### DISABLE #######
@@ -166,6 +172,7 @@ app_server <- function( input, output, session ) {
   # this makes the table for scoring....
   # reactive data
   selectedData2 <- reactive({
+    req(input$stim!="")
     task = dplyr::case_when(
       input$stim == 'broken_window' ~ 1,
       input$stim == 'refused_umbrella' ~ 2,

@@ -45,15 +45,14 @@ get_intro_div <- function() {
                          selectInput(
                            inputId = "stim",
                            label = "Select stimulus",
-                           c(
+                           selectize = T,
+                           c("Select a stimulus" = "",
                              "Broken Window" = 'broken_window',
                              "Cat Rescue" = 'cat_rescue',
                              "Refused Umbrella" = 'refused_umbrella',
                              "Cinderella" = 'cinderella',
                              "Sandwich" = 'sandwich'
-                           ),
-                           selected = "broken_window"#,
-                           #inline = F
+                           )
                          ),
                          numericInput(
                            "time",
