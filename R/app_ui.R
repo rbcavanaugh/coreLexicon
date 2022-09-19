@@ -16,15 +16,15 @@ app_ui <- function(request) {
                theme = minimal_theme(),
                
                ############################ Instructions ############################## 
-               tabPanel(value = "intro", title = "Intro", 
+               tabPanelBody(value = "intro", 
                         get_intro_div()
                ),
                ############################ Scoring ###################################
-               tabPanel(value = "scoring", title = "Scoring",
+               tabPanelBody(value = "scoring", 
                         get_scoring_div()
                ),
                ############################ Results ###################################
-               tabPanel(value = "results", title = "Results",
+               tabPanelBody(value = "results", 
                         get_results_div()
                ),
                 !!!list(bslib::nav_spacer(),

@@ -8,23 +8,29 @@
 pagetitle <- function(){
   
   title = div(
-    downloadButton("report", "Report"),
-    downloadButton("downloadData", "Data"),
-    actionButton("start_over",
-                 "Start Over",
+    shinyjs::hidden(
+        downloadButton("report", "Report")
+        ),
+    shinyjs::hidden(
+          downloadButton("downloadData", "Data")
+        ),
+    shinyjs::hidden(
+      actionButton("start_over",
+                 "Start Over"
+                 )
     ),
-    actionButton(
-      inputId = "faq",
-      label = "FAQ",
-    ),
-    actionButton(
-      inputId = "about",
-      label = "About",
-    ),
-    actionButton(
-      inputId = "feedback",
-      label = "Feedback",
-    )
+    # actionButton(
+    #   inputId = "faq",
+    #   label = "FAQ",
+    # ),
+    # actionButton(
+    #   inputId = "about",
+    #   label = "About",
+    # ),
+    # actionButton(
+    #   inputId = "feedback",
+    #   label = "Feedback",
+    # )
   )
   
   return(title)

@@ -32,27 +32,6 @@ app_server <- function( input, output, session ) {
   # ------------------------------------------------------------------------------
   ################################################################################
   
-  # larger observer to disable, hide and show specific things:
-  
-  observe({
-    # or just hide them:
-    #shinyjs::hide(selector = ".nav-item")
-    # shows download report button only on the results page. 
-    # disables the navbar buttons
-    shinyjs::disable(selector = "#mainpage li a[data-value=results]")
-    shinyjs::disable(selector = "#mainpage li a[data-value=scoring]")
-    shinyjs::disable(selector = "#mainpage li a[data-value=intro]")
-    
-    if(input$mainpage != "results"){
-      shinyjs::disable("report")
-      shinyjs::disable("downloadData")
-    } else {
-      shinyjs::enable("report")
-      shinyjs::enable("downloadData")
-    }
-    
-  })
-  
   ##### DISABLE #######
   
   observeEvent(input$stim,{
@@ -70,6 +49,7 @@ app_server <- function( input, output, session ) {
   observeEvent(input$start, {
     values$time = Sys.time()
     updateNavbarPage(session, "mainpage", selected = "scoring")
+    shinyjs::show("start_over")
   })
   
   observeEvent(input$go_back, {
@@ -78,6 +58,9 @@ app_server <- function( input, output, session ) {
   
   observeEvent(input$go_to_results, {
     updateNavbarPage(session, "mainpage", selected = "results")
+    shinyjs::show("report")
+    shinyjs::show("downloadData")
+    
   })
   
   #############################START OVER#########################################
@@ -214,28 +197,7 @@ app_server <- function( input, output, session ) {
       size = "l"
     ))
   })
-  # BIO modal. 
-  observeEvent(input$about, {
-    showModal(modalDialog(
-      shiny::includeMarkdown(system.file("app/www/bio.md", package = "coreLexicon")),
-      size = "l",
-      easyClose = TRUE,
-      footer = NULL
-    ))
-  })
-  
-  # Footer modal for feedback:
-  observeEvent(input$feedback, {
-    showModal(modalDialog(
-      tags$iframe(src = "https://docs.google.com/forms/d/e/1FAIpQLSf6Ml8j4_NtSuiUy35D8Ue1O14PWIJ8vcV1RI8U-pXfp84mpg/viewform?embedded=true",
-                  frameBorder="0",
-                  height = "650px",
-                  width = "950px"),
-      size = "l",
-      easyClose = TRUE
-    ))
-  })
-  
+
   ################################### OTHER MODALS ############################
   #trascription rules
   observeEvent(input$full_transcription, {
@@ -311,4 +273,16 @@ app_server <- function( input, output, session ) {
       })
   })
   
+  
+  ################################################################################
+  ################################################################################
+  ################################## EXPORT TEST DATA ############################
+  ################################################################################
+  ################################################################################
+  
+  # This makes the above data available after running unit test.
+  exportTestValues(transcript = tibble::tibble(transcript = input$transcr),
+                   data = selectedData2(),
+                   score = selectedData()$score,
+                   current_page = input$mainpage)
 }

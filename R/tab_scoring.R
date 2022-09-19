@@ -11,6 +11,12 @@
                    includeMarkdown(
                      system.file("app/www/scoring.md", package = "coreLexicon")
                    ),
+                   div(align = "center", 
+                       actionButton(
+                     inputId = "faq",
+                     label = "FAQ"
+                       )
+                   ),
                    tags$h4("Transcript"), 
                    div(style="max-height:200px;overflow-y: scroll;",
                    uiOutput("transcription_reference")

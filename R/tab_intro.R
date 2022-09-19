@@ -24,9 +24,6 @@ get_intro_div <- function() {
                        # start!
                        div(align = "center",
                            actionButton("glide_next1", "Get Started"))
-                     ),
-                     div(style = "margin-top: 30px;",
-                     tags$em("Note: This app is currently under development and is not ready for clinical or research use. Please leave us any feedback using the link at the top of the page.", style = "color: red;")
                      )
                    )),
       
