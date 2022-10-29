@@ -13,6 +13,11 @@ At this stage, we would appreciate feedback on the app - whether related
 to bugs/issues with the app or requested features. Please provide
 feedback or report bugs using the issues tab in the github repository.
 
+## Installation
+
+Detailed installed instructions can be found here: https://github.com/rbcavanaugh/coreLexicon/wiki
+
+
 ## About Core Lexicon Analysis
 
 CoreLex checklists have been developed for a variety of widely used
