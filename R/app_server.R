@@ -81,7 +81,7 @@ app_server <- function( input, output, session ) {
   rownames= FALSE,
   options = list(dom = 'ft',
                  ordering = TRUE,
-                 scrollY = "500px",
+                 scrollY = "400px",
                  #scroller = TRUE,
                  fixedColumns = list(heightMatch = 'none'),
                  #scrollCollapse = TRUE,
@@ -195,6 +195,15 @@ app_server <- function( input, output, session ) {
       easyClose = TRUE,
       footer = NULL,
       size = "l"
+    ))
+  })
+  
+  # selecting stimuli modal
+  observeEvent(input$stiminfo, {
+    showModal(modalDialog(
+      shiny::includeMarkdown(system.file("app/www/selectstim.md", package = "coreLexicon")),
+      easyClose = TRUE,
+      size = "m"
     ))
   })
 

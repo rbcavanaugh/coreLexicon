@@ -53,14 +53,15 @@
 # )
 # 
 # new_dict <- bind_rows(dict, add_to_dict)
-# 
-# usethis::use_data(internal = T, overwrite = T,
-#                   broken_window,
-#                   cat_rescue,
-#                   cinderella,
-#                   refused_umbrella,
-#                   sandwich,
-#                   transcriptDefault,
-#                   corpus,
-#                   norms, 
-#                   new_dict)
+# # 
+# load("~/shiny-apps/coreLexicon/R/sysdata.rda")
+usethis::use_data(internal = T, overwrite = T,
+                  broken_window,
+                  cat_rescue,
+                  cinderella,
+                  refused_umbrella,
+                  sandwich,
+                  transcriptDefault,
+                  corpus,
+                  norms,
+                  new_dict)

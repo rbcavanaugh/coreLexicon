@@ -35,14 +35,16 @@ get_intro_div <- function() {
                        align = "center",
                        div(
                          style = "display: inline-block; text-align: left;",
-                         
-                         h5("Enter participant information"),
+                         h5("Enter test information"),
                          br(),
-                         textInput("name", "Enter a Name"),
+                         textInput("name", "Enter a Name"), br(),
                          selectInput(
                            inputId = "stim",
-                           label = "Select stimulus",
-                           c(
+                           label = div("Select Stimulus ", HTML('<a id="stiminfo" href="#" class="action-button">
+                                          <i class="fa fa-info-circle" role="presentation" aria-label="info icon"></i>
+                                          </a>')
+                                       ),
+                           choices = c(
                              "Broken Window" = 'broken_window',
                              "Cat Rescue" = 'cat_rescue',
                              "Refused Umbrella" = 'refused_umbrella',
@@ -58,7 +60,7 @@ get_intro_div <- function() {
                            value = 0,
                            min = 0,
                            max = 720
-                         ),
+                         ), br(),
                          textAreaInput(
                            "notes",
                            "Enter any notes",
