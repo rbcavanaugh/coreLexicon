@@ -31,8 +31,8 @@ get_selected_data <- function(stim, score_num_data, time, adj){
     aphasia_mean = ecdf_fun(as.numeric(pwa_norms_acc[[3]]), score_num)
     # EFFICIENCY 
     
-    norm_mean_eff = ecdf_fun(as.numeric(control_norms_eff[[3]]), score_num)
-    aphasia_mean_eff = ecdf_fun(as.numeric(pwa_norms_eff[[3]]), score_num)
+    norm_mean_eff = ecdf_fun(as.numeric(control_norms_eff[[3]]), score_eff)
+    aphasia_mean_eff = ecdf_fun(as.numeric(pwa_norms_eff[[3]]), score_eff)
     
     # Max 
     max_val = dplyr::case_when(
