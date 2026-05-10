@@ -12,8 +12,8 @@ get_results_plot <- function(dat, time, basesize = 16){
     ) %>%
     dplyr::filter(met == "Production") %>%
     ggplot2::ggplot(ggplot2::aes(x = val, fill = Cohort)) +
-    ggplot2::geom_density(alpha = .3, adjust = 3) +
-    ggplot2::geom_vline(data = tibble::tibble(xint=dat[[3]][[1]],met="Production"), 
+    ggplot2::geom_density(alpha = .3, adjust = 1.5) +
+    ggplot2::geom_vline(data = tibble::tibble(xint=dat[[3]][[1]],met="Production"),
                         ggplot2::aes(xintercept = xint), linetype = "dashed", size = 1) +
     ggplot2::theme_minimal(base_size = basesize) +
     ggplot2::theme(#panel.background = element_rect(fill = "transparent"),
@@ -37,8 +37,8 @@ get_results_plot <- function(dat, time, basesize = 16){
     dplyr::filter(met == "Efficiency") %>%
     ggplot2::ggplot(
       ggplot2::aes(x = val, fill = Cohort)) +
-    ggplot2::geom_density(alpha = .3, adjust = 3) +
-    ggplot2::geom_vline(data = tibble::tibble(xint=dat[[3]][[2]],met="Efficiency"), 
+    ggplot2::geom_density(alpha = .3, adjust = 1.5) +
+    ggplot2::geom_vline(data = tibble::tibble(xint=dat[[3]][[2]],met="Efficiency"),
                         ggplot2::aes(xintercept = xint), linetype = "dashed", size = 1) +
     ggplot2::theme_minimal(base_size = basesize) +
     ggplot2::theme(#panel.background = element_rect(fill = "transparent"),
