@@ -29,6 +29,7 @@ Imports:
     tidyr,
     tibble,
     ggplot2,
+    plotly,
     textstem,
     tidytext,
     DT,

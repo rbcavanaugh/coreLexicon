@@ -60,7 +60,7 @@ shiny::setProgress(0.5)
 ### Plots
 
 ```{r, echo=F, fig.height=3, fig.width=7, warning = F}
-get_results_plot(dat = params$data, time = params$time, basesize = 10)
+get_results_plot(dat = params$data, time = params$time, basesize = 10, interactive = FALSE)
 shiny::setProgress(0.8)
 
 ```

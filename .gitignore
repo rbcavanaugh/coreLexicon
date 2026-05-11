@@ -6,3 +6,4 @@
 .nojekyll
 .DS_Store
 rsconnect/
+.claude/

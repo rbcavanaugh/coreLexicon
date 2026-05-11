@@ -102,7 +102,7 @@ app_server <- function( input, output, session ) {
   )
 
   # core lexicon results plot 
-  output$plot_cl <- renderPlot({
+  output$plot_cl <- plotly::renderPlotly({
     get_results_plot(dat = selectedData(), time = input$time)
   })
   
@@ -248,7 +248,11 @@ app_server <- function( input, output, session ) {
   
   output$report <- downloadHandler(
     # For PDF output, change this to "report.pdf"
-    filename = "report.pdf",
+    filename = function() {
+      date_str  <- format(Sys.time(), "%Y-%m-%d", tz = "America/New_York")
+      name_str  <- if(nchar(input$name) > 0) paste0(input$name, "_") else ""
+      paste0(date_str, "_", name_str, "report.pdf")
+    },
     content = function(file) {
       withProgress(message = 'Rendering, please wait!', {
         # Copy the report file to a temporary directory before processing it, in
